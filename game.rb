@@ -15,11 +15,14 @@ class Window < Gosu::Window
     $window.caption = "Attack Of The 90s!"
 
     $update = Array.new
-
     $draw = Array.new
 
     $players = Array.new
-    $players.push Player.new("Anton", Gosu::KbF, Gosu::KbG, Gosu::KbH, Gosu::KbJ) 
+    $players.push Player.new("Player One", Gosu::KbA, Gosu::KbS, Gosu::KbD, Gosu::KbF) 
+    $players.push Player.new("Player Two", Gosu::KbH, Gosu::KbJ, Gosu::KbK, Gosu::KbL) 
+    #$players.push Player.new("Player Three", Gosu::KbH, Gosu::KbJ, Gosu::KbK, Gosu::KbL) 
+    #$players.push Player.new("Player Four", Gosu::KbH, Gosu::KbJ, Gosu::KbK, Gosu::KbL) 
+
     $tick = 0
     @loader = Loader.new
   end
@@ -43,7 +46,6 @@ class Window < Gosu::Window
 
   def button_up(id)
     close if id == Gosu::KbEscape
-    #$players.each { |p| p.pressed(id) if id == p.key1 or id == p.key2 or id == p.key3 or id == p.key4 }
   end
 end
 

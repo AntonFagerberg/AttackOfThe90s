@@ -1,4 +1,4 @@
-class Intro
+class Winner
   def initialize
     $update.push self
     $draw.push self
@@ -14,18 +14,30 @@ class Intro
     @colors.push Gosu::Color.argb(0xff00ffff) # Cyan
     @colors_count = @colors.size - 1
 
+    @winner = "none"
+    max_score = nil
+    $players.each do |p| 
+      puts p.score
+      if max_score.nil? or p.score > max_score 
+        max_score = p.score 
+        @winner = p
+      end
+    end
+
+    @winner.wins += 1
     @wave = 0
+    @wait = $tick + 100
   end
 
   def update
     $players.each do |p|
-      $done = true if ($window.button_down? p.key1 or $window.button_down? p.key2 or $window.button_down? p.key3 or $window.button_down? p.key4)
+      $done = true if (@wait < $tick and ($window.button_down? p.key1 or $window.button_down? p.key2 or $window.button_down? p.key3 or $window.button_down? p.key4))
     end
   end
 
   def draw
     tock = $tick / 5
     @wave += 0.05
-    @text.draw("Attack of the 90s!", $width / 2 - 350, 200 + 50 * Math.sin(@wave), 1, 1, 1, @colors[tock % @colors_count])
+    @text.draw("Winner is #{@winner.name}!", $width / 2 - 350, 200 + 50 * Math.sin(@wave), 1, 1, 1, @colors[tock % @colors_count])
   end
 end
