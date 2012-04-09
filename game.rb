@@ -1,6 +1,6 @@
 require "gosu"
 require_relative "player"
-require_relative "level/loader"
+require_relative "loader"
 
 class Window < Gosu::Window
   def initialize
@@ -10,7 +10,7 @@ class Window < Gosu::Window
 
     super($width, $height, $fullscreen)
     
-    $debug = true
+    $debug = false
     $window = self
     $window.caption = "Attack Of The 90s!"
 
@@ -41,10 +41,9 @@ class Window < Gosu::Window
     $draw.each { |d| d.draw }
   end
 
-  def button_down(id)
-    if id == Gosu::KbEscape
-     close
-    end
+  def button_up(id)
+    close if id == Gosu::KbEscape
+    #$players.each { |p| p.pressed(id) if id == p.key1 or id == p.key2 or id == p.key3 or id == p.key4 }
   end
 end
 
