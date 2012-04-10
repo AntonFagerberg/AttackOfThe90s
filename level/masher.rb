@@ -30,7 +30,16 @@ class Masher
   end
 
   def update
-    $done = @end < $tick
+    if @end < $tick
+      # No draw is allowed!
+      max_score = nil
+      skip = false
+      $players.each do |p|
+        skip = true if !max_score.nil? and p.score == max_score
+        max_score = p.score if max_score.nil? or p.score > max_score
+      end
+      $done = !skip
+    end
 
     if @wait < $tick
       $players.each do |p|
